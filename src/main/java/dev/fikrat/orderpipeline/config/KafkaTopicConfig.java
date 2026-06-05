@@ -9,11 +9,20 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     public static final String ORDERS_TOPIC = "order.placed";
+    public static final String ORDERS_DLT = "order.placed.DLT";
 
     @Bean
     public NewTopic ordersTopic() {
         return TopicBuilder.name(ORDERS_TOPIC)
             .partitions(3)
+            .replicas(1)
+            .build();
+    }
+
+    @Bean
+    public NewTopic ordersDeadLetterTopic() {
+        return TopicBuilder.name(ORDERS_DLT)
+            .partitions(1)
             .replicas(1)
             .build();
     }
